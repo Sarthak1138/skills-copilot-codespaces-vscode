@@ -1,0 +1,35 @@
+#include "GameFramework/Actor.h"
+#include "CoreMinimal.h"
+#include "MyGun.generated.h"
+
+UCLASS()
+class MYGAME_API AMyGun : public AActor
+{
+    GENERATED_BODY()
+
+public: 
+    // Sets default values for this actor's properties
+    AMyGun();
+
+    UFUNCTION()
+    void FireWeapon();
+
+    // Mesh for the gun
+    UPROPERTY(VisibleAnywhere)
+    UStaticMeshComponent* GunMesh;
+
+    // Projectile class
+    UPROPERTY(EditAnywhere)
+    TSubclassOf<class AProjectile> ProjectileClass;
+};
+
+void AMyGun::FireWeapon()
+{
+    if (ProjectileClass)
+    {
+        FVector MuzzleLocation = GunMesh->GetSocketLocation("Muzzle");
+        FRotator MuzzleRotation = GunMesh->GetSocketRotation("Muzzle");
+
+        AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation);
+    }
+}
