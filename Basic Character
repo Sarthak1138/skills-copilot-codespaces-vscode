@@ -1,0 +1,39 @@
+#include "GameFramework/Actor.h"
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+#include "MyPlayerCharacter.generated.h"
+
+UCLASS()
+class MYGAME_API AMyPlayerCharacter : public ACharacter
+{
+    GENERATED_BODY()
+
+public:
+    // Sets default values for this actor's properties
+    AMyPlayerCharacter();
+
+protected:
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
+
+public: 
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
+
+    // Camera setup
+    UPROPERTY(VisibleAnywhere)
+    USpringArmComponent* SpringArmComponent;
+
+    UPROPERTY(VisibleAnywhere)
+    UCameraComponent* CameraComponent;
+
+    // Movement
+    void MoveForward(float Value);
+    void MoveRight(float Value);
+
+    // Input Bindings
+    void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+};
